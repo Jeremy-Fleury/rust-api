@@ -1,11 +1,17 @@
 #[macro_use]
 extern crate rocket;
 
+mod domain;
 mod infrastructures;
 
 use infrastructures::controllers;
 
-#[launch]
-fn rocket() -> _ {
-    rocket::build().mount("/", routes![controllers::hello_world_controller::get])
+#[rocket::main]
+async fn main() -> Result<(), rocket::Error> {
+    let _rocket = rocket::build()
+        .mount("/users", routes![controllers::user::get_all_users])
+        .launch()
+        .await?;
+
+    Ok(())
 }
