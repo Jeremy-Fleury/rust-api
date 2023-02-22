@@ -6,8 +6,17 @@ pub struct UserInput {
     pub password: String,
 }
 
-pub trait UserRepository {
-    fn create_user(&mut self, user_input: UserInput) -> User;
+pub struct PartialUserInput {
+    pub email: Option<String>,
+    pub password: Option<String>,
+}
 
-    fn get_all_user(&self) -> Vec<User>;
+pub trait UserRepository {
+    fn get_by_id(&self, id: &str) -> User;
+
+    fn get_all(&self) -> Vec<User>;
+
+    fn create(&mut self, user_input: UserInput) -> User;
+
+    fn update(&mut self, id: &str, partial_user_input: PartialUserInput) -> User;
 }
